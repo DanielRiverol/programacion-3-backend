@@ -1,0 +1,25 @@
+{
+  "name": "04-express",
+  "version": "1.0.0",
+  "description": "Mi primer server de express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "servidor",
+    "utn"
+  ],
+  "author": "Daniel Riverol",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "npm-paquete": "^1.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
