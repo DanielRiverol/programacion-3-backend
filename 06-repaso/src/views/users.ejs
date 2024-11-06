@@ -1,0 +1,18 @@
+<%- include('partials/head.ejs') %>
+<main class="wrapper">
+    <%- include('partials/navbar.ejs') %>
+      <h1><%= title %></h1>
+
+       <div class="card-container">
+            <% users.forEach(user => { %>
+                <div class="card">
+                    <h2><%= user.firstName %> <%= user.lastName %></h2>
+                    <p><strong>Email:</strong> <%= user.email %></p>
+                    <p><strong>Edad:</strong> <%= user.age %> años</p>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </main>
+ 
+<%- include('partials/footer.ejs') %>
