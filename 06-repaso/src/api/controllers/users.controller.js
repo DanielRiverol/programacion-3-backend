@@ -1,26 +1,20 @@
-import connection from "../database/db.js";
-export const getUsers = async (req, res) => {
-  const sql = "SELECT * FROM users";
-  const response = await connection.query(sql);
-  console.log(response);
+// import connection from "../database/db.js";
+import User from "../models/users.model.js";
 
-  res.status(200).json(response[0]);
+export const getUsers = async (req, res) => {
+  // SELECT * FROM users
+  const users = await User.findAll();
+  res.status(200).json({ payload: users });
+  //usar try catch
 };
 export const getUserById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { userId } = req.params;
-    const sql = `SELECT * FROM users WHERE users.id = ${userId}`;
-    const user = await connection.query(sql);
-    const [userFound] = user;
-    console.log("Desestructurado", userFound);
-    console.log("NO Desestructurado", user[0]);
-
-    if (userFound.length > 0) {
+    const userFound = await User.findByPk(id);
+    if (userFound) {
       res.status(200).json({ payload: userFound });
     } else {
-      res
-        .status(404)
-        .json({ message: `Usuario con el id ${userId} no encontrado` }); //Content-type: application/json
+      res.status(404).json({ message: `Usuario con id ${id} no se encuentra` });
     }
   } catch (error) {
     res
@@ -30,11 +24,43 @@ export const getUserById = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { id, nombre, apellido, edad } = req.body;
-  const sql = "INSERT INTO users (id,nombre,apellido,edad) VALUES (?,?,?,?) ";
+  const { firstName, lastName, email, status } = req.body;
+
   try {
-    const result = await connection.query(sql, [id, nombre, apellido, edad]);
-    res.status(201).json({ message: "Usuario creado con exito" });
+    const result = await User.create({ firstName, lastName, email, status });
+    res.status(201).json({ message: "Usuario creado con éxito" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error interno del servidor", error: error.message });
+  }
+};
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, email, status } = req.body;
+
+  try {
+    const result = await User.update(
+      { firstName, lastName, email, status },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).json({ message: "Usuario actualizado con éxito" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error interno del servidor", error: error.message });
+  }
+};
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+// buscar el usuario primero y existe lo elimino
+  try {
+    const result = await User.destroy({ where: { id: id } });
+    res.status(200).json({ message: "Usuario eliminado con éxito" });
   } catch (error) {
     res
       .status(500)
