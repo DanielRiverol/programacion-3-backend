@@ -26,7 +26,7 @@ const createRandomUnsers = (count = 10) => {
 const seedUsers = async () => {
   try {
     await sequelize.sync({ force: true }); //true resetea la base datos
-    const usersData = createRandomUnsers(45);
+    const usersData = createRandomUnsers(200);
 
     await User.bulkCreate(usersData); //ingreso masivo
   } catch (error) {

@@ -8,7 +8,9 @@
                 <div class="card">
                     <h2><%= user.firstName %> <%= user.lastName %></h2>
                     <p><strong>Email:</strong> <%= user.email %></p>
-                    <p><strong>Edad:</strong> <%= user.age %> años</p>
+                    <p><strong>Estado:</strong> <%= user.status ? "Activo" : "Inactivo" %> </p>
+                    <p><strong>ID:</strong> <%= user.id %></p>
+
                 </div>
                 <% }) %>
             </div>

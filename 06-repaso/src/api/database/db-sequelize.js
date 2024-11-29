@@ -3,12 +3,14 @@ import environments from "../config/environments.js";
 const { db } = environments;
 const sequelize = new Sequelize(db.database, db.user, db.password, {
   host: db.host,
+  port: db.port,
   dialect: db.dialect,
   pool: {
     max: 15,
-    acquire: 60000,
+    acquire: 30000,
     idle: 10000,
   },
+  logging: true,
 });
 
 try {
